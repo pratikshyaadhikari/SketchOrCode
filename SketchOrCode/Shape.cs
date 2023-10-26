@@ -19,6 +19,11 @@ namespace SketchOrCode
             this.x = x; // x pos    
             this.y = y; // y pos
         }
-        abstract public void draw(Graphics g);
+        public abstract void draw(Graphics g);// any derived class must implement this method
+
+        public override string ToString()
+        {
+            return base.ToString();+" " + this.x + "," + this.y + ",";
+        }
     }
 }
