@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace SketchOrCode
 {
-    internal abstract class Shape
+    abstract class Shape
     {
         protected Color colour; // colour of the shape  
         protected int x, y; //c# properties
+        Pen p;
+
 
 
         public Shape(Color colour, int x, int y)
@@ -23,7 +20,12 @@ namespace SketchOrCode
 
         public override string ToString()
         {
-            return base.ToString();+" " + this.x + "," + this.y + ",";
+            return base.ToString(); +" " + this.x + "," + this.y + ",";
+        }
+
+        public void PenColor(string color)
+        {
+            var clr
         }
     }
 }

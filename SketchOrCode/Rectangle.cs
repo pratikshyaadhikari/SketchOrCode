@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SketchOrCode
+﻿namespace SketchOrCode
 {
-    internal class Rectangle:Shape
+    internal class Rectangle : Shape
     {
         protected int width, height;
         public Rectangle(int width, int height)
@@ -14,7 +8,13 @@ namespace SketchOrCode
             this.width = width;// different from shape
             this.height = height;
         }
-        private 
+        private override void draw(Graphics g)
+        {
+            Pen p = new Pen(Color.Black, 2);
+            SolidBrush brush = new SolidBrush(Color.Black);
+            g.FillRectangle(brush, x, y, width, height);
+            g.DrawRectangle(p, x, y, width, height);
+        }
     }
 
 }
