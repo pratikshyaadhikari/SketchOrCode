@@ -46,7 +46,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(523, 506);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // textBox1
             // 
@@ -54,7 +53,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(368, 26);
             this.textBox1.TabIndex = 1;
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
             // richTextBox1
             // 
@@ -63,7 +61,6 @@
             this.richTextBox1.Size = new System.Drawing.Size(368, 364);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // button1
             // 
@@ -73,7 +70,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "Run";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.runbutton1_Click);
             // 
             // button2
             // 
@@ -83,7 +80,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Script";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.scriptbutton2_Click);
             // 
             // button3
             // 
@@ -93,7 +90,7 @@
             this.button3.TabIndex = 5;
             this.button3.Text = "Save";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button1_Click);
+            this.button3.Click += new System.EventHandler(this.savebutton1_Click);
             // 
             // button4
             // 
@@ -103,6 +100,7 @@
             this.button4.TabIndex = 6;
             this.button4.Text = "Import";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.importbutton1_Click);
             // 
             // Form1
             // 

@@ -11,41 +11,37 @@ namespace SketchOrCode
         public Form1()
         {
             InitializeComponent();
-            shapes.Add(new Circle(Color.Purple, 10, 100, 100));
-            shapes.Add(new Circle(Color Red, 100, 10, 50));
-            shapes.Add(new Rectangle(Color.Blue, 150, 150, 50, 100));
-            ///summary   
-            ///starting new project 
         }
 
       
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
+   
+
+        private void runbutton1_Click(object sender, EventArgs e)
         {
-
-        }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //excute run call the method
-
+            Graphics graphics = pictureBox1.CreateGraphics();
+            CommandParser commandParser = new CommandParser(graphics);
+            commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, false);
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void scriptbutton2_Click(object sender, EventArgs e)
         {
+            Graphics graphics = pictureBox1.CreateGraphics();
+            CommandParser commandParser = new CommandParser(graphics);
+            commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, true);
 
         }
 
-
-
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void savebutton1_Click(object sender, EventArgs e)
         {
+
+
+        }
+
+        private void importbutton1_Click(object sender, EventArgs e)
+        {
+
 
         }
     }
