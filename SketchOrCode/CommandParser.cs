@@ -51,6 +51,7 @@ namespace SketchOrCode
 
             // Add more parsing logic as needed
         }
+            if (cmdPartOnly.StartsWith("rectangle"))
 
         // You can add more methods for different parsing tasks if required
     }
