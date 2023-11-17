@@ -1,31 +1,39 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SketchOrCode
 {
     abstract class Shape
     {
-        protected Color colour; // colour of the shape  
-        protected int x, y; //c# properties
-        Pen p;
+        protected Graphics Graphics;
+        protected bool isFillOn;
+        protected Color color;
+        protected int xPos;
+        protected int yPos;
+        protected List<String> parameterList;
 
-
-
-        public Shape(Color colour, int x, int y)
+        public Shape(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<String> parameterList)
         {
-            this.colour = colour; //shape color
-            this.x = x; // x pos    
-            this.y = y; // y pos
-        }
-        public abstract void draw(Graphics g);// any derived class must implement this method
-
-        public override string ToString()
-        {
-            return base.ToString(); +" " + this.x + "," + this.y + ",";
+            Graphics = graphics;
+            this.isFillOn = isFillOn;
+            this.color = color;
+            this.xPos = xPos;
+            this.yPos = yPos;
+            this.parameterList = parameterList;
         }
 
-        public void PenColor(string color)
+        public virtual void Validate()
         {
-            var clr
+
+        }
+
+        public virtual void Draw()
+        {
+
         }
     }
 }
