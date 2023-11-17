@@ -21,8 +21,8 @@ namespace SketchOrCode
         }
 
         public void ParseCommand(String singleLineCodeVal, String multipleLineCodeVal, Boolean isSyntaxCheckOnly)
-        
-            {
+
+        {
 
             String command = singleLineCodeVal;
             //check command to run
@@ -32,29 +32,73 @@ namespace SketchOrCode
                 {
                     throw new SketchApplicationException("no command pass");
                 }
-                command =  multipleLineCodeVal;
+                command = multipleLineCodeVal;
             }
-            
 
-            // Implement the logic to parse the command
-            // You can add more sophisticated parsing logic based on your requirements
-            Console.WriteLine($"Parsing command: {command}");
+            string[] ProcessCMDByLine = command.Split(
+                new string[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.None
+            );
 
-            // Example: Splitting the command into words
-            string[] commandWords = command.Split(' ');
-
-            // Example: Displaying each word
-            foreach (string word in commandWords)
+            foreach (string cmdByLine in ProcessCMDByLine)
             {
-                Console.WriteLine($"Word: {word}");
+                if (!String.IsNullOrEmpty(cmdByLine))
+                {
+                    runCommand(cmdByLine);
+                }
+
             }
 
-            // Add more parsing logic as needed
+
+
         }
+
+        private void runCommand(string cmdByLine)
+        {
+            //splitting whole command into command and parameter section
+            int firstSpaceIndex = cmdByLine.Trim().IndexOf(" ");
+            string cmdPartOnly;
+            List<String> parameterList = new List<String>();
+            if (firstSpaceIndex > 0)
+            {
+                cmdPartOnly = cmdByLine.Substring(0, firstSpaceIndex);
+                //splitting paramater into arraylist
+                string parameterPartOnly = cmdByLine.Substring(firstSpaceIndex + 1);
+                if (!String.IsNullOrEmpty(parameterPartOnly))
+                {
+                    string[] parameterSplits = parameterPartOnly.Split(',');
+                    foreach (string parameterSplit in parameterSplits)
+                    {
+                        if (!String.IsNullOrEmpty(parameterSplit.Trim()))
+                        {
+                            parameterList.Add(parameterSplit);
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                cmdPartOnly = cmdByLine;
+            }
+            cmdPartOnly = cmdPartOnly.ToLower().Trim();
+
+            Shape shape = null;
+
             if (cmdPartOnly.StartsWith("rectangle"))
+            {
 
-        // You can add more methods for different parsing tasks if required
+                shape = new Rectangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shape.Validate();
+                shape.Draw();
+
+            }
+            else
+            {
+                throw new SketchApplicationException("Command error");
+            }
+
+        }
     }
-
 }
 
