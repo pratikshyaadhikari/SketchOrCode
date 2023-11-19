@@ -83,16 +83,115 @@ namespace SketchOrCode
             }
             cmdPartOnly = cmdPartOnly.ToLower().Trim();
 
-            Shape shape = null;
+            Shape shapes = null;
 
             if (cmdPartOnly.StartsWith("rectangle"))
             {
 
-                shape = new Rectangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
-                shape.Validate();
-                shape.Draw();
+                shapes = new Rectangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shapes.Validate();
+                shapes.Draw();
 
             }
+            else if (cmdPartOnly.StartsWith("circle"))
+            {
+
+                shapes = new Circle(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shapes.Validate();
+                shapes.Draw();
+
+            }
+            else if (cmdPartOnly.StartsWith("drawto"))
+            {
+                shapes = new Shape(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shapes.Validate();
+                shapes.Draw();
+            }
+            else if (cmdPartOnly.StartsWith("moveto"))
+            {
+                if (parameterList.Count != 2)
+                {
+                    throw new SketchApplicationException("Moveto param error");
+                }
+
+                Boolean isNumeric1 = int.TryParse(parameterList[0], out _);
+                if (!isNumeric1)
+                {
+                    throw new SketchApplicationException("MoveTo param first value is not a number.");
+                }
+
+                Boolean isNumeric2 = int.TryParse(parameterList[1], out _);
+                if (!isNumeric2)
+                {
+                    throw new SketchApplicationException("MoveTo param second value is not a number.");
+                }
+
+                this.xPos = int.Parse(parameterList[0]);
+                this.yPos = int.Parse(parameterList[1]);
+            }
+            else if (cmdPartOnly.StartsWith("clear"))
+            {
+                Graphics.Clear(System.Drawing.SystemColors.ActiveCaption);
+            }
+            else if (cmdPartOnly.StartsWith("reset"))
+            {
+                ParseCommand(cmdPartOnly, "clear", false);
+                this.xPos = 0;
+                this.yPos = 0;
+                this.color = Color.Black;
+
+
+            }
+            else if (cmdPartOnly.StartsWith("pen"))
+            {
+                if (parameterList.Count != 1)
+                {
+                    throw new SketchApplicationException("Pen param error");
+                }
+
+                Boolean isNumeric1 = int.TryParse(parameterList[0], out _);
+                if (isNumeric1)
+                {
+                    throw new SketchApplicationException("Pen param first value is not valid color name.");
+                }
+
+
+
+                String colorName = (string)parameterList[0];
+                this.color = Color.FromName(colorName);
+            }
+            else if (cmdPartOnly.StartsWith("fill"))
+            {
+                if (parameterList.Count != 1)
+                {
+                    throw new SketchApplicationException("Fill param error");
+                }
+
+                Boolean isNumeric1 = int.TryParse(parameterList[0], out _);
+                if (isNumeric1)
+                {
+                    throw new SketchApplicationException("Fill param first value is not a string.");
+                }
+
+
+
+                String fillOn = (string)parameterList[0];
+                if (fillOn.ToLower().Trim().Equals("on"))
+                {
+                    this.isFillOn = true;
+                }
+                else if (fillOn.ToLower().Trim().Equals("off"))
+                {
+                    this.isFillOn = false;
+                }
+                else
+                {
+                    throw new SketchApplicationException("Fill param first value is not on/off.");
+                }
+
+
+            }
+
             else
             {
                 throw new SketchApplicationException("Command error");
