@@ -21,9 +21,7 @@ namespace SketchOrCode
         }
 
         public void ParseCommand(String singleLineCodeVal, String multipleLineCodeVal, Boolean isSyntaxCheckOnly)
-
         {
-
             String command = singleLineCodeVal;
             //check command to run
             if (String.IsNullOrEmpty(singleLineCodeVal))
@@ -48,9 +46,6 @@ namespace SketchOrCode
                 }
 
             }
-
-
-
         }
 
         private void runCommand(string cmdByLine)
@@ -101,12 +96,7 @@ namespace SketchOrCode
                 shapes.Draw();
 
             }
-            else if (cmdPartOnly.StartsWith("drawto"))
-            {
-                shapes = new Shape(Graphics, isFillOn, color, xPos, yPos, parameterList);
-                shapes.Validate();
-                shapes.Draw();
-            }
+
             else if (cmdPartOnly.StartsWith("moveto"))
             {
                 if (parameterList.Count != 2)
@@ -197,6 +187,20 @@ namespace SketchOrCode
                 throw new SketchApplicationException("Command error");
             }
 
+        }
+
+        public String getInputCommand(String singleLineCodeVal, String multipleLineCodeVal)
+        {
+
+            if (String.IsNullOrEmpty(singleLineCodeVal))
+            {
+                if (String.IsNullOrEmpty(multipleLineCodeVal))
+                {
+                    throw new SketchApplicationException("no command pass");
+                }
+                return multipleLineCodeVal;
+            }
+            return singleLineCodeVal;
         }
     }
 }
