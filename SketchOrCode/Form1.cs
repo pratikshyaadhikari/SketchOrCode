@@ -3,20 +3,24 @@ using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+private System.Windows.Forms.RichTextBox multipleLineCode;
 
 namespace SketchOrCode
 {
     public partial class Form1 : Form
     {
         ArrayList shapes = new ArrayList();
+        private object multipleLineCode;
+        private readonly object multipleLineCodeVal;
+
         public Form1()
         {
             InitializeComponent();
         }
 
-      
 
-   
+
+
 
         private void runbutton1_Click(object sender, EventArgs e)
         {
@@ -50,15 +54,41 @@ namespace SketchOrCode
 
             string saveFileLocation = saveFileDialog1.FileName;
             CommandParser commandParser = new CommandParser(null);
-            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(singleLineCode.Text, multipleLineCode.Text));
+            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(singleLineCodeVal.Text, multipleLineCodeVal.Text));
         }
 
-    }
 
         private void importbutton1_Click(object sender, EventArgs e)
         {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; ;
+            openFileDialog1.FilterIndex = 0;
+            openFileDialog1.RestoreDirectory = true;
+
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string readFileLocation = openFileDialog1.FileName;
+            string cmdReadFromFile = File.ReadAllText(readFileLocation);
+            multipleLineCode.Text= cmdReadFromFile;
+        }
+
+        private void multipleLineCode_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void displayArea_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }
+
 }
+  
+
+
