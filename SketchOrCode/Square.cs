@@ -19,7 +19,7 @@ namespace SketchOrCode
         {
             if (parameterList.Count != 2)
             {
-                throw new SketchApplicationException("Square param error");
+                throw new SketchApplicationException("Square param error. Required two param");
             }
 
             Boolean isNumeric1 = int.TryParse(parameterList[0], out _);
