@@ -17,7 +17,7 @@ namespace SketchOrCode
         {
             if (parameterList.Count != 2)
             {
-                throw new SketchApplicationException("Rectangle param error");
+                throw new SketchApplicationException("Rectangle param error. Required two param");
             }
 
             Boolean isNumeric1 = int.TryParse(parameterList[0], out _);
