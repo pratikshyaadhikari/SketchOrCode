@@ -43,13 +43,13 @@ namespace SketchOrCode
             {
                 if (!String.IsNullOrEmpty(cmdByLine))
                 {
-                    runCommand(cmdByLine);
+                    runCommand(cmdByLine, isSyntaxCheckOnly);
                 }
 
             }
         }
 
-        private void runCommand(string cmdByLine)
+        private void runCommand(string cmdByLine, Boolean isSyntaxCheckOnly)
         {
             //splitting whole command into command and parameter section
             int firstSpaceIndex = cmdByLine.Trim().IndexOf(" ");
@@ -86,7 +86,10 @@ namespace SketchOrCode
 
                 shapes = new Rectangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
                 shapes.Validate();
-                shapes.Draw();
+                if (!isSyntaxCheckOnly) {
+                    shapes.Draw();
+                }
+                    
 
             }
             else if (cmdPartOnly.StartsWith("circle"))
@@ -94,26 +97,38 @@ namespace SketchOrCode
 
                 shapes = new Circle(Graphics, isFillOn, color, xPos, yPos, parameterList);
                 shapes.Validate();
-                shapes.Draw();
+                if (!isSyntaxCheckOnly)
+                {
+                    shapes.Draw();
+                }
 
             }
             else if (cmdPartOnly.StartsWith("drawto"))
             {
                 shapes = new DrawTo(Graphics, isFillOn, color, xPos, yPos, parameterList);
                 shapes.Validate();
-                shapes.Draw();
+                if (!isSyntaxCheckOnly)
+                {
+                    shapes.Draw();
+                }
             }
             else if (cmdPartOnly.StartsWith("triangle"))
             {
                 shapes = new Triangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
                 shapes.Validate();
-                shapes.Draw();
+                if (!isSyntaxCheckOnly)
+                {
+                    shapes.Draw();
+                }
             }
             else if (cmdPartOnly.StartsWith("square"))
             {
                 shapes = new Square(Graphics, isFillOn, color, xPos, yPos, parameterList);
                 shapes.Validate();
-                shapes.Draw();
+                if (!isSyntaxCheckOnly)
+                {
+                    shapes.Draw();
+                }
             }
             else if (cmdPartOnly.StartsWith("moveto"))
             {
@@ -134,19 +149,31 @@ namespace SketchOrCode
                     throw new SketchApplicationException("MoveTo param second value is not a number.");
                 }
 
-                this.xPos = int.Parse(parameterList[0]);
-                this.yPos = int.Parse(parameterList[1]);
+                if (!isSyntaxCheckOnly)
+                {
+                    this.xPos = int.Parse(parameterList[0]);
+                    this.yPos = int.Parse(parameterList[1]);
+                }
+                
             }
             else if (cmdPartOnly.StartsWith("clear"))
             {
-                Graphics.Clear(System.Drawing.SystemColors.ButtonShadow);
+                if (!isSyntaxCheckOnly)
+                {
+                    Graphics.Clear(System.Drawing.SystemColors.ButtonShadow);
+                }
+                
             }
             else if (cmdPartOnly.StartsWith("reset"))
             {
-                 this.xPos = 0;
-                 this.yPos = 0;
-                 this.color = Color.Black;
-                Graphics.Clear(System.Drawing.SystemColors.ButtonShadow);
+                if (!isSyntaxCheckOnly)
+                {
+                    this.xPos = 0;
+                    this.yPos = 0;
+                    this.color = Color.Black;
+                    Graphics.Clear(System.Drawing.SystemColors.ButtonShadow);
+                }
+                
 
 
             }
@@ -164,9 +191,12 @@ namespace SketchOrCode
                 }
 
 
-
-                String colorName = (string)parameterList[0];
-                this.color = Color.FromName(colorName);
+                if (!isSyntaxCheckOnly)
+                {
+                    String colorName = (string)parameterList[0];
+                    this.color = Color.FromName(colorName);
+                }
+                    
             }
             else if (cmdPartOnly.StartsWith("fill"))
             {
@@ -186,11 +216,18 @@ namespace SketchOrCode
                 String fillOn = (string)parameterList[0];
                 if (fillOn.ToLower().Trim().Equals("on"))
                 {
-                    this.isFillOn = true;
+                    if (!isSyntaxCheckOnly)
+                    {
+                        this.isFillOn = true;
+                    }
+                   
                 }
                 else if (fillOn.ToLower().Trim().Equals("off"))
                 {
-                    this.isFillOn = false;
+                    if (!isSyntaxCheckOnly)
+                    {
+                        this.isFillOn = false;
+                    }
                 }
                 else
                 {
