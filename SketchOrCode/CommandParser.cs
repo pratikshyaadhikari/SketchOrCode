@@ -96,6 +96,12 @@ namespace SketchOrCode
                 shapes.Draw();
 
             }
+            else if (cmdPartOnly.StartsWith("drawto"))
+            {
+                shapes = new DrawTo(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shapes.Validate();
+                shapes.Draw();
+            }
 
             else if (cmdPartOnly.StartsWith("moveto"))
             {
