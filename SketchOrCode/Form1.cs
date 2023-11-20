@@ -40,6 +40,7 @@ namespace SketchOrCode
             Graphics graphics = pictureBox1.CreateGraphics();
             CommandParser commandParser = new CommandParser(graphics);
             commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, true);
+            MessageBox.Show("No syntax error");
 
         }
 
@@ -60,6 +61,7 @@ namespace SketchOrCode
             string saveFileLocation = saveFileDialog1.FileName;
             CommandParser commandParser = new CommandParser(null);
             File.WriteAllText(saveFileLocation, commandParser.getInputCommand(textBox1.Text, richTextBox1.Text));
+            MessageBox.Show("File saved");
         }
 
 
@@ -80,6 +82,7 @@ namespace SketchOrCode
             string readFileLocation = openFileDialog1.FileName;
             string cmdReadFromFile = File.ReadAllText(readFileLocation);
             richTextBox1.Text= cmdReadFromFile;
+            MessageBox.Show("File imported");
         }
 
         private void multipleLineCode_TextChanged(object sender, EventArgs e)
