@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-private System.Windows.Forms.RichTextBox multipleLineCode;
+
 
 namespace SketchOrCode
 {
     public partial class Form1 : Form
     {
-        ArrayList shapes = new ArrayList();
+
         private object multipleLineCode;
         private readonly object multipleLineCodeVal;
 
@@ -54,7 +59,7 @@ namespace SketchOrCode
 
             string saveFileLocation = saveFileDialog1.FileName;
             CommandParser commandParser = new CommandParser(null);
-            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(singleLineCodeVal.Text, multipleLineCodeVal.Text));
+            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(textBox1.Text, richTextBox1.Text));
         }
 
 
@@ -74,7 +79,7 @@ namespace SketchOrCode
 
             string readFileLocation = openFileDialog1.FileName;
             string cmdReadFromFile = File.ReadAllText(readFileLocation);
-            multipleLineCode.Text= cmdReadFromFile;
+            richTextBox1.Text= cmdReadFromFile;
         }
 
         private void multipleLineCode_TextChanged(object sender, EventArgs e)
