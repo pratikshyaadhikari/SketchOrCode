@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace SketchOrCode
 {
@@ -102,7 +103,12 @@ namespace SketchOrCode
                 shapes.Validate();
                 shapes.Draw();
             }
-
+            else if (cmdPartOnly.StartsWith("triangle"))
+            {
+                shapes = new Triangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shapes.Validate();
+                shapes.Draw();
+            }
             else if (cmdPartOnly.StartsWith("moveto"))
             {
                 if (parameterList.Count != 2)
