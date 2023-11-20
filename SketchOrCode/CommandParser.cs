@@ -109,6 +109,12 @@ namespace SketchOrCode
                 shapes.Validate();
                 shapes.Draw();
             }
+            else if (cmdPartOnly.StartsWith("square"))
+            {
+                shapes = new Square(Graphics, isFillOn, color, xPos, yPos, parameterList);
+                shapes.Validate();
+                shapes.Draw();
+            }
             else if (cmdPartOnly.StartsWith("moveto"))
             {
                 if (parameterList.Count != 2)
@@ -133,14 +139,14 @@ namespace SketchOrCode
             }
             else if (cmdPartOnly.StartsWith("clear"))
             {
-                Graphics.Clear(System.Drawing.SystemColors.ActiveCaption);
+                Graphics.Clear(System.Drawing.SystemColors.ButtonShadow);
             }
             else if (cmdPartOnly.StartsWith("reset"))
             {
-                ParseCommand(cmdPartOnly, "clear", false);
-                this.xPos = 0;
-                this.yPos = 0;
-                this.color = Color.Black;
+                 this.xPos = 0;
+                 this.yPos = 0;
+                 this.color = Color.Black;
+                Graphics.Clear(System.Drawing.SystemColors.ButtonShadow);
 
 
             }
@@ -196,7 +202,7 @@ namespace SketchOrCode
 
             else
             {
-                throw new SketchApplicationException("Command error");
+                throw new SketchApplicationException(cmdPartOnly + " command error");
             }
 
         }
