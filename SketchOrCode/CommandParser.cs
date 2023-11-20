@@ -16,11 +16,18 @@ namespace SketchOrCode
         private int xPos = 0;
         private int yPos = 0;
 
+        /*statement
+        *CommandParser  constructor class, which initializes the Graphics field with the provided Graphics object.
+        */
         public CommandParser(Graphics graphics)
         {
             this.Graphics = graphics;
         }
 
+        /*statement
+         *Parsecommand takes two string parameters (singleLineCodeVal and multipleLineCodeVal) and a boolean parameter (isSyntaxCheckOnly). 
+         *It processes the command lines and executes commands provided.
+        */
         public void ParseCommand(String singleLineCodeVal, String multipleLineCodeVal, Boolean isSyntaxCheckOnly)
         {
             String command = singleLineCodeVal;
@@ -48,7 +55,10 @@ namespace SketchOrCode
 
             }
         }
-
+        /*
+         * private method called by ParseCommand.
+         * It processes an individual command line, extracts the command and parameters, and executes the corresponding action.
+         */
         private void runCommand(string cmdByLine, Boolean isSyntaxCheckOnly)
         {
             //splitting whole command into command and parameter section
@@ -80,9 +90,10 @@ namespace SketchOrCode
             cmdPartOnly = cmdPartOnly.ToLower().Trim();
 
             Shape shapes = null;
-
+            //Executing rectangle . checking for the validation 
             if (cmdPartOnly.StartsWith("rectangle"))
             {
+                 
 
                 shapes = new Rectangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
                 shapes.Validate();
@@ -92,6 +103,7 @@ namespace SketchOrCode
                     
 
             }
+            //Executing circle. checking for the validation 
             else if (cmdPartOnly.StartsWith("circle"))
             {
 
@@ -112,6 +124,7 @@ namespace SketchOrCode
                     shapes.Draw();
                 }
             }
+            //Executing traingle. checking for the validation 
             else if (cmdPartOnly.StartsWith("triangle"))
             {
                 shapes = new Triangle(Graphics, isFillOn, color, xPos, yPos, parameterList);
@@ -121,6 +134,7 @@ namespace SketchOrCode
                     shapes.Draw();
                 }
             }
+            //Executing Square. checking for the validation 
             else if (cmdPartOnly.StartsWith("square"))
             {
                 shapes = new Square(Graphics, isFillOn, color, xPos, yPos, parameterList);
@@ -130,6 +144,7 @@ namespace SketchOrCode
                     shapes.Draw();
                 }
             }
+            //Executing moveto . checking for the validation moveto command
             else if (cmdPartOnly.StartsWith("moveto"))
             {
                 if (parameterList.Count != 2)
@@ -177,6 +192,7 @@ namespace SketchOrCode
 
 
             }
+            // working with command line pen
             else if (cmdPartOnly.StartsWith("pen"))
             {
                 if (parameterList.Count != 1)
@@ -198,6 +214,7 @@ namespace SketchOrCode
                 }
                     
             }
+            // fill command to fill in the colors.
             else if (cmdPartOnly.StartsWith("fill"))
             {
                 if (parameterList.Count != 1)
@@ -243,6 +260,10 @@ namespace SketchOrCode
             }
 
         }
+        /*
+         * This method is intended to return the input command based on the provided parameters single line or multiple line, 
+         * with some error checking.
+         */
 
         public String getInputCommand(String singleLineCodeVal, String multipleLineCodeVal)
         {

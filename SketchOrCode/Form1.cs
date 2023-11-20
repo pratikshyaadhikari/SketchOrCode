@@ -25,7 +25,9 @@ namespace SketchOrCode
 
 
 
-
+        /*
+         *Run Button class creates a Graphics object from a PictureBox and uses a CommandParser to parse and execute the entered commands.
+         */
 
         private void runbutton1_Click(object sender, EventArgs e)
         {
@@ -34,6 +36,11 @@ namespace SketchOrCode
             commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, false);
 
         }
+
+        /*
+         *Script button class when clicked does a syntax check (without executing) using the CommandParser and 
+         *shows a message box indicating whether there are syntax errors.
+         */
 
         private void scriptbutton2_Click(object sender, EventArgs e)
         {
@@ -44,6 +51,10 @@ namespace SketchOrCode
 
         }
 
+        /*
+         * This method is called when the "Save" button (savebutton1) is clicked. 
+         * It opens a SaveFileDialog, gets the selected file location, and saves the entered commands to the selected file.
+         */
         private void savebutton1_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -59,12 +70,15 @@ namespace SketchOrCode
             }
 
             string saveFileLocation = saveFileDialog1.FileName;
-            CommandParser commandParser = new CommandParser(null);
-            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(textBox1.Text, richTextBox1.Text));
+            CommandParser commandParser = new CommandParser(null);// constructor
+            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(textBox1.Text, richTextBox1.Text));// It writes the content of the input commands to a file specified by the user during the save operation.
             MessageBox.Show("File saved");
         }
 
-
+        /*
+         * This method is called when the "Import" button (importbutton1) is clicked.
+         * It opens an OpenFileDialog, reads the contents of the selected file, and displays them in the richTextBox1.
+         */
         private void importbutton1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -80,6 +94,8 @@ namespace SketchOrCode
             }
 
             string readFileLocation = openFileDialog1.FileName;
+            
+
             string cmdReadFromFile = File.ReadAllText(readFileLocation);
             richTextBox1.Text= cmdReadFromFile;
             MessageBox.Show("File imported");
