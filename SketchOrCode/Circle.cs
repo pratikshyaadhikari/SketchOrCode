@@ -17,7 +17,7 @@ namespace SketchOrCode
         {
             if (parameterList.Count != 1)
             {
-                throw new SketchApplicationException("Circle param error");
+                throw new SketchApplicationException("Circle param error. Required one param");
             }
 
             Boolean isNumeric = int.TryParse(parameterList[0], out _);
