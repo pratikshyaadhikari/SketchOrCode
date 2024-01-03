@@ -18,6 +18,8 @@ namespace SketchOrCode
         private int xPos = 0;
         private int yPos = 0;
 
+        private Dictionary<string, string> variableValueDictionary = new Dictionary<string, string>();
+
         /*statement
         *CommandParser  constructor class, which initializes the Graphics field with the provided Graphics object.
         */
@@ -90,6 +92,24 @@ namespace SketchOrCode
                 cmdPartOnly = cmdByLine;
             }
             cmdPartOnly = cmdPartOnly.ToLower().Trim();
+
+            List<String> parameterListAfterVariableReplacedWithActualVal = new List<String>();
+            //changing variables to actual value if any exist
+            foreach (String param in parameterList)
+            {
+                if (variableValueDictionary.ContainsKey(param))
+                {
+                    String actualParamVal = variableValueDictionary[param];
+                    parameterListAfterVariableReplacedWithActualVal.Add(actualParamVal);
+                }else
+                {
+                    parameterListAfterVariableReplacedWithActualVal.Add(param);
+                }
+
+                
+            }
+
+            parameterList = parameterListAfterVariableReplacedWithActualVal;
 
             Shape shapes = null;
             //Executing rectangle . checking for the validation 
@@ -255,7 +275,16 @@ namespace SketchOrCode
 
 
             }
+            else if (cmdByLine.Contains("="))
+            {
+                string[] parts = cmdByLine.Split('=');
 
+                if (parts.Length == 2)
+                {
+                    variableValueDictionary.Add(parts[0], parts[1]);
+                }
+                    
+            }
             else
             {
                 throw new SketchApplicationException(cmdPartOnly + " command error");
