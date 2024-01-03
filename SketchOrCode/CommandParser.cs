@@ -299,17 +299,67 @@ namespace SketchOrCode
                 if (parts.Length == 2)
                 {
                     string part2Val = arithmeticOperation(parts[1]).ToString();
-                    if (variableValueDictionary.ContainsKey(parts[0]))
+                    if (variableValueDictionary.ContainsKey(parts[0].Trim()))
                     {
-                        variableValueDictionary.Remove(parts[0]);
+                        variableValueDictionary.Remove(parts[0].Trim());
                     }
-                    variableValueDictionary.Add(parts[0], part2Val);
+                    variableValueDictionary.Add(parts[0].Trim(), part2Val);
                 }
                     
             }
-            else if (cmdPartOnly.Contains("while"))
+            else if (cmdPartOnly.Contains("while") || cmdPartOnly.Contains("endWhile"))
             {
 
+                if (cmdPartOnly.Contains("endWhile"))
+                {
+                    return executionIndex; // no need to work
+                }
+
+                Console.WriteLine("hello");
+                String evalCondtion = parameterList[0];
+                int endWhileIndex = 0;
+                if (evaluateCondtion(evalCondtion))
+                {
+                    Console.WriteLine("while true");
+                    for (int executionIndexForLoopCont = executionIndex + 1; executionIndexForLoopCont < ProcessCMDByLine.Length; executionIndexForLoopCont++)
+                    {
+
+                        String loopCmd = ProcessCMDByLine[executionIndexForLoopCont];
+
+                        if (loopCmd.Contains("endwhile"))
+                        {
+                            endWhileIndex = executionIndexForLoopCont;
+                            executionIndexForLoopCont = executionIndex;
+                            continue;
+                        }
+
+                        if (evaluateCondtion(evalCondtion))
+                        {
+                            executionIndexForLoopCont = runCommand(loopCmd, isSyntaxCheckOnly, executionIndexForLoopCont, ProcessCMDByLine);
+                        }
+                        else
+                        {
+                            return endWhileIndex;
+                        }
+
+                        continue;
+                    }
+                }
+                else
+                {
+                    for (int executionIndexForSkip = executionIndex + 1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
+                    {
+                        String skipCmd = ProcessCMDByLine[executionIndexForSkip];
+                        if (skipCmd.Contains("endWhile"))
+                        {
+                            return executionIndexForSkip; // no need to work
+                        }
+
+                        continue;
+                    }
+                    Console.WriteLine("if false");
+                }
+                //if work
                 //while loop work
 
             }
@@ -337,14 +387,11 @@ namespace SketchOrCode
                             return executionIndexForSkip; // no need to work
                         }
 
-                        if (!String.IsNullOrEmpty(skipCmd))
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                     Console.WriteLine("if false");
                 }
-                //if work
+
 
             }
             else if (cmdPartOnly.Contains("call"))
@@ -403,8 +450,8 @@ namespace SketchOrCode
             if (expression.Contains("+"))
             {
                 string[] split = expression.Split('+');
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -418,8 +465,8 @@ namespace SketchOrCode
             else if (expression.Contains("-"))
             {
                 string[] split = expression.Split('-');
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -433,8 +480,8 @@ namespace SketchOrCode
             else if (expression.Contains("/"))
             {
                 string[] split = expression.Split('/');
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -448,8 +495,8 @@ namespace SketchOrCode
             else if (expression.Contains("*"))
             {
                 string[] split = expression.Split('*');
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -468,8 +515,8 @@ namespace SketchOrCode
             if (expression.Contains(">"))
             {
                 string[] split = expression.Split('>');
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -482,8 +529,8 @@ namespace SketchOrCode
             }else if (expression.Contains("<"))
             {
                 string[] split = expression.Split('<');
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -497,8 +544,8 @@ namespace SketchOrCode
             else if (expression.Contains(">="))
             {
                 string[] split = expression.Split(new[] { ">=" }, StringSplitOptions.None);
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -512,8 +559,8 @@ namespace SketchOrCode
             else if (expression.Contains("<="))
             {
                 string[] split = expression.Split(new[] { "<=" }, StringSplitOptions.None);
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
@@ -527,8 +574,8 @@ namespace SketchOrCode
             else if (expression.Contains("=="))
             {
                 string[] split = expression.Split(new[] { "==" }, StringSplitOptions.None);
-                string firstOp = split[0];
-                string secondOp = split[1];
+                string firstOp = split[0].Trim();
+                string secondOp = split[1].Trim();
                 if (variableValueDictionary.ContainsKey(firstOp))
                 {
                     firstOp = variableValueDictionary[firstOp];
