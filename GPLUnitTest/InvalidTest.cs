@@ -21,6 +21,9 @@ namespace SketchOrCode.nUnitTests
         public void invalidCmdTest()
         {
             String command = "invalidCmd";
+            var ex = Assert.Throws<SketchApplicationException>(() => commandParser.ParseCommand(command, null, true));
+            // Assert specific details about the exception if needed
+            Assert.AreEqual("invalidcmd command error. Error occur at Line 1.", ex.Message);
             commandParser.ParseCommand(command, null, false);
         }
 
@@ -30,7 +33,9 @@ namespace SketchOrCode.nUnitTests
             String command = "circle x \n" +
                 "moveto 100,100 \n" +
                 "drawto 100,100,100";
-            commandParser.ParseCommand(command, null, false);
+            var ex = Assert.Throws<SketchApplicationException>(() => commandParser.ParseCommand(command, null, true));
+            // Assert specific details about the exception if needed
+            Assert.AreEqual("Circle param value is not a number.. Error occur at Line 1.", ex.Message);
         }
 
         [Test]
@@ -39,7 +44,9 @@ namespace SketchOrCode.nUnitTests
             String command = "circle 50 \n" +
                 "moveto 100,100 \n" +
                 "drawto 100,100,100";
-            commandParser.ParseCommand(command, null, false);
+            var ex = Assert.Throws<SketchApplicationException>(() => commandParser.ParseCommand(command, null, true));
+            // Assert specific details about the exception if needed
+            Assert.AreEqual("Circle param value is not a number.. Error occur at Line 1.", ex.Message);
         }
 
         
