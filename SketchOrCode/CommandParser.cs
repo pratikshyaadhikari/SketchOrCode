@@ -59,7 +59,7 @@ namespace SketchOrCode
                 {
                     try
                     {
-                        executionIndex = runCommand(cmdByLine, isSyntaxCheckOnly, executionIndex);
+                        executionIndex = runCommand(cmdByLine, isSyntaxCheckOnly, executionIndex, ProcessCMDByLine);
                     }
                     catch(SketchApplicationException x)
                     {
@@ -78,10 +78,11 @@ namespace SketchOrCode
          * private method called by ParseCommand.
          * It processes an individual command line, extracts the command and parameters, and executes the corresponding action.
          */
-        private int runCommand(string cmdByLine, Boolean isSyntaxCheckOnly, int executionIndex)
+        private int runCommand(string cmdByLine, Boolean isSyntaxCheckOnly, int executionIndex, string[] ProcessCMDByLine)
         {
+            cmdByLine = cmdByLine.Trim();
             //splitting whole command into command and parameter section
-            int firstSpaceIndex = cmdByLine.Trim().IndexOf(" ");
+            int firstSpaceIndex = cmdByLine.IndexOf(" ");
             string cmdPartOnly;
             List<String> parameterList = new List<String>();
             if (firstSpaceIndex > 0)
@@ -297,7 +298,7 @@ namespace SketchOrCode
 
                 if (parts.Length == 2)
                 {
-                    string part2Val = expersionEval(parts[1]).ToString();
+                    string part2Val = arithmeticOperation(parts[1]).ToString();
                     if (variableValueDictionary.ContainsKey(parts[0]))
                     {
                         variableValueDictionary.Remove(parts[0]);
@@ -312,9 +313,37 @@ namespace SketchOrCode
                 //while loop work
 
             }
-            else if (cmdPartOnly.Contains("if"))
+            else if (cmdPartOnly.Contains("if") || cmdPartOnly.Contains("endif"))
             {
 
+                if (cmdPartOnly.Contains("endif"))
+                {
+                    return executionIndex; // no need to work
+                }
+
+                Console.WriteLine("hello");
+                String evalCondtion = parameterList[0];
+                if (evaluateCondtion(evalCondtion))
+                {
+                    Console.WriteLine("if true");
+                    //continue with process
+                }else
+                {
+                    for (int executionIndexForSkip = executionIndex+1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
+                    {
+                        String skipCmd = ProcessCMDByLine[executionIndexForSkip];
+                        if (skipCmd.Contains("endif"))
+                        {
+                            return executionIndexForSkip; // no need to work
+                        }
+
+                        if (!String.IsNullOrEmpty(skipCmd))
+                        {
+                            continue;
+                        }
+                    }
+                    Console.WriteLine("if false");
+                }
                 //if work
 
             }
@@ -369,7 +398,7 @@ namespace SketchOrCode
             return File.ReadAllText(saveFileLocation);
         }
 
-        public int expersionEval(String expression)
+        public int arithmeticOperation(String expression)
         {
             if (expression.Contains("+"))
             {
@@ -434,8 +463,89 @@ namespace SketchOrCode
             return int.Parse(expression);
         }
 
+        public Boolean evaluateCondtion(String expression)
+        {
+            if (expression.Contains(">"))
+            {
+                string[] split = expression.Split('>');
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) > int.Parse(secondOp);
+            }else if (expression.Contains("<"))
+            {
+                string[] split = expression.Split('<');
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) < int.Parse(secondOp);
+            }
+            else if (expression.Contains(">="))
+            {
+                string[] split = expression.Split(new[] { ">=" }, StringSplitOptions.None);
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) >= int.Parse(secondOp);
+            }
+            else if (expression.Contains("<="))
+            {
+                string[] split = expression.Split(new[] { "<=" }, StringSplitOptions.None);
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) <= int.Parse(secondOp);
+            }
+            else if (expression.Contains("=="))
+            {
+                string[] split = expression.Split(new[] { "==" }, StringSplitOptions.None);
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) == int.Parse(secondOp);
+            }
+            return false;
+            
         }
 
-  
+
+    }
+
+
 }
 
