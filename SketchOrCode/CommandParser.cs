@@ -19,6 +19,7 @@ namespace SketchOrCode
         private int yPos = 0;
 
         private Dictionary<string, string> variableValueDictionary = new Dictionary<string, string>();
+        private Dictionary<string, string> methodBodyDictionary = new Dictionary<string, string>();
 
         /*statement
         *CommandParser  constructor class, which initializes the Graphics field with the provided Graphics object.
@@ -50,20 +51,34 @@ namespace SketchOrCode
                 StringSplitOptions.None
             );
 
-            foreach (string cmdByLine in ProcessCMDByLine)
+
+            for (int executionIndex = 0; executionIndex < ProcessCMDByLine.Length; executionIndex++)
             {
+                String cmdByLine = ProcessCMDByLine[executionIndex];
                 if (!String.IsNullOrEmpty(cmdByLine))
                 {
-                    runCommand(cmdByLine, isSyntaxCheckOnly);
+                    try
+                    {
+                        executionIndex = runCommand(cmdByLine, isSyntaxCheckOnly, executionIndex);
+                    }
+                    catch(SketchApplicationException x)
+                    {
+                        throw new SketchApplicationException(x.Message + ". Error occur at Line " + (executionIndex + 1)+".");
+                    }catch (Exception x)
+                    {
+                        Console.WriteLine(x.StackTrace);
+                        throw new SketchApplicationException(x.Message + ". Error occur at Line " + (executionIndex + 1) + ".");
+                    }
                 }
-
             }
+
+
         }
         /*
          * private method called by ParseCommand.
          * It processes an individual command line, extracts the command and parameters, and executes the corresponding action.
          */
-        private void runCommand(string cmdByLine, Boolean isSyntaxCheckOnly)
+        private int runCommand(string cmdByLine, Boolean isSyntaxCheckOnly, int executionIndex)
         {
             //splitting whole command into command and parameter section
             int firstSpaceIndex = cmdByLine.Trim().IndexOf(" ");
@@ -291,10 +306,38 @@ namespace SketchOrCode
                 }
                     
             }
+            else if (cmdPartOnly.Contains("while"))
+            {
+
+                //while loop work
+
+            }
+            else if (cmdPartOnly.Contains("if"))
+            {
+
+                //if work
+
+            }
+            else if (cmdPartOnly.Contains("call"))
+            {
+
+                //method call work
+
+            }
+            else if (cmdPartOnly.Contains("method"))
+            {
+
+                //method work
+               // methodBodyDictionary.Add()
+
+            }
+
             else
             {
                 throw new SketchApplicationException(cmdPartOnly + " command error");
             }
+
+            return executionIndex;
 
         }
         /*
