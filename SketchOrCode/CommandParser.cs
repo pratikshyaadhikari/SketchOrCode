@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -359,8 +360,6 @@ namespace SketchOrCode
                     }
                     Console.WriteLine("if false");
                 }
-                //if work
-                //while loop work
 
             }
             else if (cmdPartOnly.Contains("if") || cmdPartOnly.Contains("endif"))
@@ -375,8 +374,8 @@ namespace SketchOrCode
                 String evalCondtion = parameterList[0];
                 if (evaluateCondtion(evalCondtion))
                 {
+                    //ignore true the basic flow will handle this one
                     Console.WriteLine("if true");
-                    //continue with process
                 }else
                 {
                     for (int executionIndexForSkip = executionIndex+1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
@@ -389,7 +388,6 @@ namespace SketchOrCode
 
                         continue;
                     }
-                    Console.WriteLine("if false");
                 }
 
 
@@ -397,15 +395,58 @@ namespace SketchOrCode
             else if (cmdPartOnly.Contains("call"))
             {
 
-                //method call work
+                Console.WriteLine("method def part started");
+                String methodName = parameterList[0].Trim();
+                if (!methodBodyDictionary.ContainsKey(methodName))
+                {
+                    throw new SketchApplicationException(methodName + " does not defined yet. ");
+                }
+
+                String methodBody = methodBodyDictionary[methodName];
+
+
+                string[] methodProcessCMDByLine = methodBody.Split(
+               new string[] { "\r\n", "\r", "\n" },
+               StringSplitOptions.None
+           );
+
+
+                for (int methodExecutionIndex = 0; methodExecutionIndex < methodProcessCMDByLine.Length; methodExecutionIndex++)
+                {
+                    String methodcmdByLine = methodProcessCMDByLine[methodExecutionIndex];
+                    if (!String.IsNullOrEmpty(methodcmdByLine))
+                    {
+                        runCommand(methodcmdByLine, isSyntaxCheckOnly, methodExecutionIndex, methodProcessCMDByLine);
+                    }
+                }
+
 
             }
             else if (cmdPartOnly.Contains("method"))
             {
 
                 //method work
-               // methodBodyDictionary.Add()
+                // methodBodyDictionary.Add()
 
+                Console.WriteLine("method def part started");
+                String methodName = parameterList[0].Trim();
+
+                String methodBody = "";
+                for (int executionIndexForSkip = executionIndex + 1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
+                {
+                    String methodCMD = ProcessCMDByLine[executionIndexForSkip];
+                    if (methodCMD.Contains("endmethod"))
+                    {
+                        methodBodyDictionary.Add(methodName, methodBody);
+                        return executionIndexForSkip;
+                    }
+                    methodBody = methodBody + methodCMD + "\n";
+                }
+
+                if (methodBodyDictionary.ContainsKey(methodName))
+                {
+                    throw new SketchApplicationException(methodName + " already defined. Duplication method def found. ");
+                }
             }
 
             else
