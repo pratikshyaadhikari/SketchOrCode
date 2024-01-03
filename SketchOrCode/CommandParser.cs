@@ -277,11 +277,17 @@ namespace SketchOrCode
             }
             else if (cmdByLine.Contains("="))
             {
+                
                 string[] parts = cmdByLine.Split('=');
 
                 if (parts.Length == 2)
                 {
-                    variableValueDictionary.Add(parts[0], parts[1]);
+                    string part2Val = expersionEval(parts[1]).ToString();
+                    if (variableValueDictionary.ContainsKey(parts[0]))
+                    {
+                        variableValueDictionary.Remove(parts[0]);
+                    }
+                    variableValueDictionary.Add(parts[0], part2Val);
                 }
                     
             }
@@ -320,7 +326,72 @@ namespace SketchOrCode
             return File.ReadAllText(saveFileLocation);
         }
 
-    }
+        public int expersionEval(String expression)
+        {
+            if (expression.Contains("+"))
+            {
+                string[] split = expression.Split('+');
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) + int.Parse(secondOp);
+            }
+            else if (expression.Contains("-"))
+            {
+                string[] split = expression.Split('-');
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) - int.Parse(secondOp);
+            }
+            else if (expression.Contains("/"))
+            {
+                string[] split = expression.Split('/');
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) / int.Parse(secondOp);
+            }
+            else if (expression.Contains("*"))
+            {
+                string[] split = expression.Split('*');
+                string firstOp = split[0];
+                string secondOp = split[1];
+                if (variableValueDictionary.ContainsKey(firstOp))
+                {
+                    firstOp = variableValueDictionary[firstOp];
+                }
+                if (variableValueDictionary.ContainsKey(secondOp))
+                {
+                    secondOp = variableValueDictionary[secondOp];
+                }
+                return int.Parse(firstOp) * int.Parse(secondOp);
+            }
+            return int.Parse(expression);
+        }
+
+        }
 
   
 }
