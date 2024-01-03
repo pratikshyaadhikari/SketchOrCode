@@ -25,7 +25,7 @@ namespace SketchOrCode.nUnitTests
                 "fill on\n" +
                 "rectangle 90,40\n" +
                 "circle 80";
-            commandParser.ParseCommand(command, null, true);
+            commandParser.ParseCommand(command, null, false);
         }
 
    
