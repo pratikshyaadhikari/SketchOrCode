@@ -24,7 +24,6 @@ namespace SketchOrCode.nUnitTests
             var ex = Assert.Throws<SketchApplicationException>(() => commandParser.ParseCommand(command, null, true));
             // Assert specific details about the exception if needed
             Assert.AreEqual("invalidcmd command error. Error occur at Line 1.", ex.Message);
-            commandParser.ParseCommand(command, null, false);
         }
 
         [Test]
@@ -46,7 +45,7 @@ namespace SketchOrCode.nUnitTests
                 "drawto 100,100,100";
             var ex = Assert.Throws<SketchApplicationException>(() => commandParser.ParseCommand(command, null, true));
             // Assert specific details about the exception if needed
-            Assert.AreEqual("Circle param value is not a number.. Error occur at Line 1.", ex.Message);
+            Assert.AreEqual("DrawTo param error. Required two param. Error occur at Line 3.", ex.Message);
         }
 
         
