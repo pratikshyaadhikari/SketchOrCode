@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SketchOrCode.nUnitTests
 {
-    internal class MultilineTest
+    internal class MethodTest
     {
         CommandParser commandParser;
 
@@ -14,20 +14,19 @@ namespace SketchOrCode.nUnitTests
         public void Setup()
         {
             commandParser = new CommandParser(null);
-
         }
 
         [Test]
         public void validCmdTest()
         {
-            String command = "clear\n" +
-                "pen white\n" +
-                "fill on\n" +
-                "rectangle 90,40\n" +
-                "circle 80";
+            String command = "method test\r\n " +
+                "circle 90\r\n  " +
+                "rectangle 90,10\r\n" +
+                "endmethod\r\n" +
+                "\n"+
+                "clear\r\n" +
+                "call test";
             commandParser.ParseCommand(command, null, true);
         }
-
-   
     }
 }
