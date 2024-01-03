@@ -9,14 +9,14 @@ namespace SketchOrCode
 {
     abstract class Shape
     {
-        protected Graphics Graphics;
+        protected GraphicsAdapter Graphics;
         protected bool isFillOn;
         protected Color color;
         protected int xPos;
         protected int yPos;
         protected List<String> parameterList;
 
-        public Shape(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<String> parameterList)
+        public Shape(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<String> parameterList)
         {
             Graphics = graphics;
             this.isFillOn = isFillOn;
@@ -44,15 +44,6 @@ namespace SketchOrCode
             {
                 throw new SketchApplicationException("DrawTo param second value is not a number.");
             }
-
-        }
-
-        public virtual void Draw()
-        {
-            int xPoint = int.Parse(parameterList[0]);
-            int yPoint = int.Parse(parameterList[1]);
-
-            Graphics.DrawLine(new Pen(color), new PointF(xPos, yPos), new PointF(xPoint, yPoint));
 
         }
     }

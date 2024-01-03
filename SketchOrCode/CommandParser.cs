@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
 namespace SketchOrCode
 {
     public class CommandParser
     {
-        private Graphics Graphics;
+        private GraphicsAdapter Graphics;
         private bool isFillOn = false;
         private Color color = Color.Black;
         private int xPos = 0;
@@ -19,7 +21,7 @@ namespace SketchOrCode
         /*statement
         *CommandParser  constructor class, which initializes the Graphics field with the provided Graphics object.
         */
-        public CommandParser(Graphics graphics)
+        public CommandParser(GraphicsAdapter graphics)
         {
             this.Graphics = graphics;
         }
@@ -36,7 +38,7 @@ namespace SketchOrCode
             {
                 if (String.IsNullOrEmpty(multipleLineCodeVal))
                 {
-                    throw new SketchApplicationException("no command pass");
+                    throw new SketchApplicationException("Nothing has been passed to processed. Please write your code.");
                 }
                 command = multipleLineCodeVal;
             }
@@ -272,14 +274,25 @@ namespace SketchOrCode
             {
                 if (String.IsNullOrEmpty(multipleLineCodeVal))
                 {
-                    throw new SketchApplicationException("no command pass");
+                    throw new SketchApplicationException("Nothing has been passed to processed. Please write your code.");
                 }
                 return multipleLineCodeVal;
             }
             return singleLineCodeVal;
         }
 
-       
+        public void SaveFile(String saveFileLocation, String command)
+        {
+            File.WriteAllText(saveFileLocation, command);
+        }
+
+        public String ReadFile(String saveFileLocation)
+        {
+            return File.ReadAllText(saveFileLocation);
+        }
+
     }
+
+  
 }
 

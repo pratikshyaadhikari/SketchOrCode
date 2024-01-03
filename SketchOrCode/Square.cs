@@ -11,7 +11,7 @@ namespace SketchOrCode
     {
         protected int size;
 
-        public Square(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
+        public Square(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
         }
 
@@ -35,7 +35,10 @@ namespace SketchOrCode
             }
         }
 
-       
+        public virtual void Draw()
+        {
+            //implemented in child cmd process class
+        }
 
     }
 }

@@ -9,7 +9,7 @@ namespace SketchOrCode
 {
     internal class DrawTo: Shape
     {
-        public DrawTo(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
+        public DrawTo(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
         }
 
@@ -38,7 +38,7 @@ namespace SketchOrCode
             int xPoint = int.Parse(parameterList[0]);
             int yPoint = int.Parse(parameterList[1]);
 
-            Graphics.DrawLine(new Pen(color), new PointF(xPos, yPos), new PointF(xPoint, yPoint));
+            Graphics.DrawLine(new Pen(color), xPos, yPos,xPoint, yPoint);
 
         }
     }

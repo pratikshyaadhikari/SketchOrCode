@@ -47,7 +47,7 @@ namespace SketchOrCode
             Graphics graphics = pictureBox1.CreateGraphics();
             CommandParser commandParser = new CommandParser(graphics);
             commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, true);
-            MessageBox.Show("No syntax error");
+            MessageBox.Show("Everything looks good. No error found.");
 
         }
 
@@ -71,7 +71,7 @@ namespace SketchOrCode
 
             string saveFileLocation = saveFileDialog1.FileName;
             CommandParser commandParser = new CommandParser(null);// constructor
-            File.WriteAllText(saveFileLocation, commandParser.getInputCommand(textBox1.Text, richTextBox1.Text));// It writes the content of the input commands to a file specified by the user during the save operation.
+            commandParser.SaveFile(saveFileLocation, commandParser.getInputCommand(textBox1.Text, richTextBox1.Text));// It writes the content of the input commands to a file specified by the user during the save operation.
             MessageBox.Show("File saved");
         }
 
@@ -94,9 +94,9 @@ namespace SketchOrCode
             }
 
             string readFileLocation = openFileDialog1.FileName;
-            
 
-            string cmdReadFromFile = File.ReadAllText(readFileLocation);
+            CommandParser commandParser = new CommandParser(null);// constructor
+            string cmdReadFromFile = commandParser.ReadFile(readFileLocation);
             richTextBox1.Text= cmdReadFromFile;
             MessageBox.Show("File imported");
         }
@@ -107,6 +107,11 @@ namespace SketchOrCode
         }
 
         private void displayArea_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

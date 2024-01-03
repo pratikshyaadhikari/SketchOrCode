@@ -9,7 +9,7 @@ namespace SketchOrCode
 {
     internal class Triangle : Shape
     {
-        public Triangle(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
+        public Triangle(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
         }
 
@@ -37,16 +37,16 @@ namespace SketchOrCode
         {
             int x = int.Parse(parameterList[0]);
             int y = int.Parse(parameterList[1]);
-            int size = 100;
+            
 
             Point p = new Point(xPos, yPos);
             if (isFillOn)
             {
-                Graphics.FillPolygon(Brushes.Aquamarine, new Point[] { p, new Point(x, y * 2), new Point(x + size, y * 2) });
+                Graphics.FillPolygon(new SolidBrush(color), xPos, yPos, x, y);
             }
             else
             {
-                Graphics.FillPolygon(Brushes.Aquamarine, new Point[] { p, new Point(x, y * 2), new Point(x + size, y * 2) });
+                Graphics.DrawPolygon(new Pen(color), xPos, yPos, x, y); ;
             }
         }
     }

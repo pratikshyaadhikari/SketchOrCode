@@ -9,7 +9,7 @@ namespace SketchOrCode
 {
     internal class Circle : Shape
     {
-        public Circle(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
+        public Circle(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
         }
 
@@ -33,11 +33,11 @@ namespace SketchOrCode
 
             if (isFillOn)
             {
-                Graphics.FillEllipse(new SolidBrush(color), xPos - radius, yPos - radius, 2 * radius, 2 * radius);
+                Graphics.FillEllipse(new SolidBrush(color), xPos, yPos , radius);
             }
             else
             {
-                Graphics.DrawEllipse(new Pen(color), xPos - radius, yPos - radius, 2 * radius, 2 * radius);
+                Graphics.DrawEllipse(new Pen(color), xPos, yPos, radius);
             }
         }
     }

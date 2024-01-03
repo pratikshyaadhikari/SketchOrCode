@@ -10,7 +10,7 @@ namespace SketchOrCode
     internal class Rectangle:Shape
     {
         protected int width, height;
-        public Rectangle(Graphics graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
+        public Rectangle(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
         }
         public override void Validate()

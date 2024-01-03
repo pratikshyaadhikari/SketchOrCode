@@ -48,18 +48,22 @@
   <ItemGroup>
     <Compile Include="Circle.cs" />
     <Compile Include="CommandParser.cs" />
+    <Compile Include="DrawTo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphicsAdapter.cs" />
+    <Compile Include="IGraphics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="SketchApplicationException.cs" />
     <Compile Include="Square.cs" />
+    <Compile Include="Triangle.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
