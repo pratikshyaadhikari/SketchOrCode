@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SketchOrCode
 {
-    internal class SketchApplicationException : Exception
+    public class SketchApplicationException : Exception
     {
         public SketchApplicationException(string message) : base(message)
         {
