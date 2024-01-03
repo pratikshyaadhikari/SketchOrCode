@@ -46,5 +46,9 @@ namespace SketchOrCode
             }
 
         }
+
+        public virtual void Draw()
+        {
+        }
     }
 }

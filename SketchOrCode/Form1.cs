@@ -32,7 +32,7 @@ namespace SketchOrCode
         private void runbutton1_Click(object sender, EventArgs e)
         {
             Graphics graphics = pictureBox1.CreateGraphics();
-            CommandParser commandParser = new CommandParser(graphics);
+            CommandParser commandParser = new CommandParser(new GraphicsAdapter(graphics));
             commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, false);
 
         }
@@ -45,7 +45,7 @@ namespace SketchOrCode
         private void scriptbutton2_Click(object sender, EventArgs e)
         {
             Graphics graphics = pictureBox1.CreateGraphics();
-            CommandParser commandParser = new CommandParser(graphics);
+            CommandParser commandParser = new CommandParser(new GraphicsAdapter(graphics));
             commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, true);
             MessageBox.Show("Everything looks good. No error found.");
 
