@@ -46,24 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Circle.cs" />
+    <Compile Include="Drawing\Circle.cs" />
+    <Compile Include="CommandIfc.cs" />
     <Compile Include="CommandParser.cs" />
-    <Compile Include="DrawTo.cs" />
+    <Compile Include="Drawing\DrawTo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GraphicsAdapter.cs" />
-    <Compile Include="IGraphics.cs" />
+    <Compile Include="Drawing\GraphicsAdapter.cs" />
+    <Compile Include="Drawing\IGraphics.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Programming\Programming.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rectangle.cs" />
-    <Compile Include="Shape.cs" />
+    <Compile Include="Drawing\Rectangle.cs" />
+    <Compile Include="Drawing\Shape.cs" />
     <Compile Include="SketchApplicationException.cs" />
-    <Compile Include="Square.cs" />
-    <Compile Include="Triangle.cs" />
+    <Compile Include="Drawing\Square.cs" />
+    <Compile Include="Drawing\Triangle.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,5 +91,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

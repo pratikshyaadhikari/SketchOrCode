@@ -10,7 +10,12 @@ namespace SketchOrCode
 {
     public class GraphicsAdapter : IGraphics
     {
-        private readonly Graphics Graphics;
+        Graphics Graphics;
+
+        public GraphicsAdapter()
+        {
+           
+        }
 
         public GraphicsAdapter(Graphics graphics)
         {
