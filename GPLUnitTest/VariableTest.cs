@@ -25,5 +25,15 @@ namespace SketchOrCode.nUnitTests
                 "circle a";
             commandParser.ParseCommand(command, null, true);
         }
+
+
+        [Test]
+        public void validCmdTest2()
+        {
+            String command = "a= 10\r\n" +
+                "a= a*5\r\n" +
+                "circle a";
+            commandParser.ParseCommand(command, null, true);
+        }
     }
 }

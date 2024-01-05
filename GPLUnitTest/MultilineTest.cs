@@ -28,6 +28,21 @@ namespace SketchOrCode.nUnitTests
             commandParser.ParseCommand(command, null, true);
         }
 
-   
+        [Test]
+        public void invalidCmdTest()
+        {
+            String command = "clear\n" +
+                "pen white\n" +
+                "fill on\n" +
+                "rectangl 90,40\n" +
+                "circle 80";
+           ;
+
+            var ex = Assert.Throws<SketchApplicationException>(() => commandParser.ParseCommand(command, null, true));
+            // Assert specific details about the exception if needed
+            Assert.AreEqual("rectangl command error. Error occur at Line 4.", ex.Message);
+        }
+
+
     }
 }
