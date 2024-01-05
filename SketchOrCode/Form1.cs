@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,8 +33,7 @@ namespace SketchOrCode
         private void runbutton1_Click(object sender, EventArgs e)
         {
             Graphics graphics = pictureBox1.CreateGraphics();
-            CommandParser commandParser = new CommandParser(new GraphicsAdapter(graphics));
-            commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, false);
+            runGPLThread(graphics, textBox1.Text, richTextBox1.Text, false, 1);
 
         }
 
@@ -45,8 +45,7 @@ namespace SketchOrCode
         private void scriptbutton2_Click(object sender, EventArgs e)
         {
             Graphics graphics = pictureBox1.CreateGraphics();
-            CommandParser commandParser = new CommandParser(new GraphicsAdapter(graphics));
-            commandParser.ParseCommand(textBox1.Text, richTextBox1.Text, true);
+            runGPLThread(graphics, textBox1.Text, richTextBox1.Text, true, 1);
             MessageBox.Show("Everything looks good. No error found.");
 
         }
@@ -112,6 +111,47 @@ namespace SketchOrCode
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //run button for second program
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Graphics graphics = pictureBox1.CreateGraphics();
+            runGPLThread(graphics, null, richTextBox2.Text, false, 2);
+        }
+
+        //syntax check button for second program
+        private void syntaxBtn2_Click(object sender, EventArgs e)
+        {
+            Graphics graphics = pictureBox1.CreateGraphics();
+            runGPLThread(graphics, null, richTextBox2.Text, true, 2);
+            MessageBox.Show("Everything looks good. No error found.");
+        }
+
+        private void runGPLThread(Graphics graphics, String commandLine, String multiline, Boolean isSyntaxCheck, int programNo)
+        {
+            Thread thread = new Thread(() =>
+            {
+                if(programNo == 1)
+                {
+                    Thread.Sleep(10000);
+                }
+                else if (programNo == 2)
+                {
+                    Thread.Sleep(1000);
+                }
+               
+                Thread t = Thread.CurrentThread;
+                CommandParser commandParser = new CommandParser(new GraphicsAdapter(graphics));
+                commandParser.ParseCommand(commandLine, multiline, isSyntaxCheck);
+            });
+
+            thread.Start();
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
