@@ -18,7 +18,9 @@ namespace SketchOrCode
         private Color color = Color.Black;
         private int xPos = 0;
         private int yPos = 0;
-
+        /*statement
+         * using singleton pattern where we use this dictionary instant variable to use globally within the program
+         * */
         private Dictionary<string, string> variableValueDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> methodBodyDictionary = new Dictionary<string, string>();
 
@@ -292,45 +294,45 @@ namespace SketchOrCode
 
 
             }
-            else if (cmdByLine.Contains("="))
+            else if (cmdPartOnly.Contains("while") || cmdPartOnly.Contains("endwhile"))
             {
+
                 
-                string[] parts = cmdByLine.Split('=');
 
-                if (parts.Length == 2)
-                {
-                    string part2Val = arithmeticOperation(parts[1]).ToString();
-                    if (variableValueDictionary.ContainsKey(parts[0].Trim()))
-                    {
-                        variableValueDictionary.Remove(parts[0].Trim());
-                    }
-                    variableValueDictionary.Add(parts[0].Trim(), part2Val);
-                }
-                    
-            }
-            else if (cmdPartOnly.Contains("while") || cmdPartOnly.Contains("endWhile"))
-            {
-
-                if (cmdPartOnly.Contains("endWhile"))
+                if (cmdPartOnly.Equals("endWhile"))
                 {
                     return executionIndex; // no need to work
+                }else
+                {
+                    if (parameterList.Count != 1)
+                    {
+                        throw new SketchApplicationException("While statement condition part not exist.");
+                    }
                 }
 
                 Console.WriteLine("hello");
                 String evalCondtion = parameterList[0];
                 int endWhileIndex = 0;
+                Boolean isEndWhileStatementExist = false;
                 if (evaluateCondtion(evalCondtion))
                 {
                     Console.WriteLine("while true");
+                    
                     for (int executionIndexForLoopCont = executionIndex + 1; executionIndexForLoopCont < ProcessCMDByLine.Length; executionIndexForLoopCont++)
                     {
 
+                        if (executionIndexForLoopCont == ProcessCMDByLine.Length)
+                        {
+                            break;
+                        }
+
                         String loopCmd = ProcessCMDByLine[executionIndexForLoopCont];
 
-                        if (loopCmd.Contains("endwhile"))
+                        if (loopCmd.Equals("endwhile"))
                         {
                             endWhileIndex = executionIndexForLoopCont;
                             executionIndexForLoopCont = executionIndex;
+                            isEndWhileStatementExist = true;
                             continue;
                         }
 
@@ -345,14 +347,23 @@ namespace SketchOrCode
 
                         continue;
                     }
+
+                    
                 }
                 else
                 {
                     for (int executionIndexForSkip = executionIndex + 1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
                     {
-                        String skipCmd = ProcessCMDByLine[executionIndexForSkip];
-                        if (skipCmd.Contains("endWhile"))
+                        if (executionIndexForSkip == ProcessCMDByLine.Length)
                         {
+                            break;
+                        }
+
+                        String skipCmd = ProcessCMDByLine[executionIndexForSkip];
+                        if (skipCmd.Equals("endwhile"))
+                        {
+
+                            isEndWhileStatementExist = true;
                             return executionIndexForSkip; // no need to work
                         }
 
@@ -361,39 +372,70 @@ namespace SketchOrCode
                     Console.WriteLine("if false");
                 }
 
-            }
-            else if (cmdPartOnly.Contains("if") || cmdPartOnly.Contains("endif"))
-            {
-
-                if (cmdPartOnly.Contains("endif"))
+                if (!isEndWhileStatementExist)
                 {
-                    return executionIndex; // no need to work
+                    throw new SketchApplicationException("Loop end statement endwhile does not found.");
                 }
 
-                Console.WriteLine("hello");
-                String evalCondtion = parameterList[0];
-                if (evaluateCondtion(evalCondtion))
+            }
+            else if (cmdPartOnly.Contains("if") || cmdPartOnly.Equals("endif"))
+            {
+                
+
+                Boolean isEndIfStatementExist = false;
+                if (cmdPartOnly.Equals("endif"))
                 {
-                    //ignore true the basic flow will handle this one
-                    Console.WriteLine("if true");
+                    return executionIndex; // no need to work
                 }else
                 {
-                    for (int executionIndexForSkip = executionIndex+1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
+                    if (parameterList.Count != 1)
                     {
-                        String skipCmd = ProcessCMDByLine[executionIndexForSkip];
-                        if (skipCmd.Contains("endif"))
-                        {
-                            return executionIndexForSkip; // no need to work
-                        }
-
-                        continue;
+                        throw new SketchApplicationException("if statement condition part not exist.");
                     }
+
+                    Console.WriteLine("hello");
+                    String evalCondtion = parameterList[0];
+                    
+                    if (evaluateCondtion(evalCondtion))
+                    {
+                        //ignore true the basic flow will handle this one
+                        Console.WriteLine("if true");
+                    }
+                    else
+                    {
+                        for (int executionIndexForSkip = executionIndex + 1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
+                        {
+
+                            if (executionIndexForSkip == ProcessCMDByLine.Length)
+                            {
+                                break;
+                            }
+
+                            String skipCmd = ProcessCMDByLine[executionIndexForSkip];
+                            if (skipCmd.Contains("endif"))
+                            {
+                                return executionIndexForSkip; // no need to work
+                            }
+
+                            continue;
+                        }
+                    }
+                }
+
+                
+                if (!isEndIfStatementExist)
+                {
+                    throw new SketchApplicationException("If statement endif does not found.");
                 }
 
 
             }
             else if (cmdPartOnly.Contains("call"))
             {
+                if (parameterList.Count != 1)
+                {
+                    throw new SketchApplicationException("method statement method name param not defined.");
+                }
 
                 Console.WriteLine("method def part started");
                 String methodName = parameterList[0].Trim();
@@ -413,6 +455,8 @@ namespace SketchOrCode
 
                 for (int methodExecutionIndex = 0; methodExecutionIndex < methodProcessCMDByLine.Length; methodExecutionIndex++)
                 {
+                   
+
                     String methodcmdByLine = methodProcessCMDByLine[methodExecutionIndex];
                     if (!String.IsNullOrEmpty(methodcmdByLine))
                     {
@@ -425,15 +469,27 @@ namespace SketchOrCode
             else if (cmdPartOnly.Contains("method"))
             {
 
+                if (parameterList.Count != 1)
+                {
+                    throw new SketchApplicationException("method statement method name param not defined.");
+                }
+
                 //method work
                 // methodBodyDictionary.Add()
 
                 Console.WriteLine("method def part started");
                 String methodName = parameterList[0].Trim();
 
+                Boolean isMethodDefExist = false;
                 String methodBody = "";
                 for (int executionIndexForSkip = executionIndex + 1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
                 {
+
+                    if(executionIndexForSkip == ProcessCMDByLine.Length)
+                    {
+                        break;
+                    }
+
                     String methodCMD = ProcessCMDByLine[executionIndexForSkip];
                     if (methodCMD.Contains("endmethod"))
                     {
@@ -447,8 +503,27 @@ namespace SketchOrCode
                 {
                     throw new SketchApplicationException(methodName + " already defined. Duplication method def found. ");
                 }
+                if (!isMethodDefExist)
+                {
+                    throw new SketchApplicationException("method statement endmethod statement not defined.");
+                }
             }
+            else if (cmdByLine.Contains("="))
+            {
 
+                string[] parts = cmdByLine.Split('=');
+
+                if (parts.Length == 2)
+                {
+                    string part2Val = arithmeticOperation(parts[1]).ToString();
+                    if (variableValueDictionary.ContainsKey(parts[0].Trim()))
+                    {
+                        variableValueDictionary.Remove(parts[0].Trim());
+                    }
+                    variableValueDictionary.Add(parts[0].Trim(), part2Val);
+                }
+
+            }
             else
             {
                 throw new SketchApplicationException(cmdPartOnly + " command error");
@@ -501,6 +576,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if(!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) + int.Parse(secondOp);
             }
             else if (expression.Contains("-"))
@@ -516,6 +602,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) - int.Parse(secondOp);
             }
             else if (expression.Contains("/"))
@@ -531,6 +628,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) / int.Parse(secondOp);
             }
             else if (expression.Contains("*"))
@@ -546,6 +654,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) * int.Parse(secondOp);
             }
             return int.Parse(expression);
@@ -566,6 +685,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) > int.Parse(secondOp);
             }else if (expression.Contains("<"))
             {
@@ -580,6 +710,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) < int.Parse(secondOp);
             }
             else if (expression.Contains(">="))
@@ -595,6 +736,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) >= int.Parse(secondOp);
             }
             else if (expression.Contains("<="))
@@ -610,6 +762,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) <= int.Parse(secondOp);
             }
             else if (expression.Contains("=="))
@@ -625,6 +788,17 @@ namespace SketchOrCode
                 {
                     secondOp = variableValueDictionary[secondOp];
                 }
+
+                if (!int.TryParse(firstOp, out _))
+                {
+                    throw new SketchApplicationException(firstOp + " is invalid value.");
+                }
+
+                if (!int.TryParse(secondOp, out _))
+                {
+                    throw new SketchApplicationException(secondOp + " is invalid value.");
+                }
+
                 return int.Parse(firstOp) == int.Parse(secondOp);
             }
             return false;
