@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -83,6 +84,7 @@ namespace SketchOrCode
          */
         private int runCommand(string cmdByLine, Boolean isSyntaxCheckOnly, int executionIndex, string[] ProcessCMDByLine)
         {
+            Thread.Sleep(1000);
             cmdByLine = cmdByLine.Trim();
             //splitting whole command into command and parameter section
             int firstSpaceIndex = cmdByLine.IndexOf(" ");
@@ -382,15 +384,32 @@ namespace SketchOrCode
             {
                 
 
-                Boolean isEndIfStatementExist = false;
+               
                 if (cmdPartOnly.Equals("endif"))
                 {
                     return executionIndex; // no need to work
                 }else
                 {
+                    Boolean isEndIfStatementExist = false;
                     if (parameterList.Count != 1)
                     {
                         throw new SketchApplicationException("if statement condition part not exist.");
+                    }
+
+                    //validation end if block
+                    for (int executionIndexForSkip = executionIndex + 1; executionIndexForSkip < ProcessCMDByLine.Length; executionIndexForSkip++)
+                    {
+
+                        if (executionIndexForSkip == ProcessCMDByLine.Length)
+                        {
+                            break;
+                        }
+
+                        String skipCmd = ProcessCMDByLine[executionIndexForSkip];
+                        if (skipCmd.Contains("endif"))
+                        {
+                            isEndIfStatementExist = true;
+                        }
                     }
 
                     Console.WriteLine("hello");
@@ -420,17 +439,18 @@ namespace SketchOrCode
                             continue;
                         }
                     }
+                    if (!isEndIfStatementExist)
+                    {
+                        throw new SketchApplicationException("If statement endif does not found.");
+                    }
                 }
 
                 
-                if (!isEndIfStatementExist)
-                {
-                    throw new SketchApplicationException("If statement endif does not found.");
-                }
+               
 
 
             }
-            else if (cmdPartOnly.Contains("call"))
+            else if (cmdPartOnly.Contains("call")) // method call
             {
                 if (parameterList.Count != 1)
                 {
@@ -466,7 +486,7 @@ namespace SketchOrCode
 
 
             }
-            else if (cmdPartOnly.Contains("method"))
+            else if (cmdPartOnly.Contains("method")) // method defination
             {
 
                 if (parameterList.Count != 1)
@@ -508,7 +528,7 @@ namespace SketchOrCode
                     throw new SketchApplicationException("method statement endmethod statement not defined.");
                 }
             }
-            else if (cmdByLine.Contains("="))
+            else if (cmdByLine.Contains("=")) //variables declaration
             {
 
                 string[] parts = cmdByLine.Split('=');
@@ -524,6 +544,7 @@ namespace SketchOrCode
                 }
 
             }
+            //variables declaration bkock end
             else
             {
                 throw new SketchApplicationException(cmdPartOnly + " command error");
@@ -670,7 +691,7 @@ namespace SketchOrCode
             return int.Parse(expression);
         }
 
-        public Boolean evaluateCondtion(String expression)
+        public Boolean evaluateCondtion(String expression) // loop  work with variabl 
         {
             if (expression.Contains(">"))
             {
