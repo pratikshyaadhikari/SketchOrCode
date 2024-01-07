@@ -17,8 +17,8 @@ namespace SketchOrCode.nUnitTests
                "rectangle 90,40\n" +
                "circle 80";
 
-        String filesavepath = "C:\\Users\\prati\\OneDrive\\Desktop\\ASE\\sampleSaveProgram.txt";
-        String filereadpath = "C:\\Users\\prati\\OneDrive\\Desktop\\ASE\\sampleReadProgram.txt";
+        String filesavepath = "C:\\Users\\prati\\OneDrive\\Desktop\\leeds beckett university\\2nd sem\\ASE\\sampleSaveProgram.txt";
+        String filereadpath = "C:\\Users\\prati\\OneDrive\\Desktop\\leeds beckett university\\2nd sem\\ASE\\sampleReadProgram.txt";
 
         [SetUp]
         public void Setup()
