@@ -134,15 +134,7 @@ namespace SketchOrCode
         {
             Thread thread = new Thread(() =>
             {
-                if(programNo == 1)
-                {
-                    Thread.Sleep(10000);
-                }
-                else if (programNo == 2)
-                {
-                    Thread.Sleep(1000);
-                }
-               
+
                 Thread t = Thread.CurrentThread;
                 CommandParser commandParser = new CommandParser(new GraphicsAdapter(graphics));
                 commandParser.ParseCommand(commandLine, multiline, isSyntaxCheck);
@@ -152,6 +144,11 @@ namespace SketchOrCode
         }
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

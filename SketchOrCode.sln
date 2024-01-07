@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SketchOrCode", "SketchOrCode\SketchOrCode.csproj", "{63451A5A-B5E2-4CE5-AD1F-B9CE9A6AE433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SketchOrCode.nUnitTests", "GPLUnitTest\SketchOrCode.nUnitTests.csproj", "{70EC8899-F6BB-49B3-8E1F-3986CC7FAF62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SketchOrCode.nUnitTests", "GPLUnitTest\SketchOrCode.nUnitTests.csproj", "{70EC8899-F6BB-49B3-8E1F-3986CC7FAF62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
