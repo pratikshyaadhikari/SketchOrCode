@@ -9,7 +9,11 @@ namespace SketchOrCode
 {
     internal class Rectangle:Shape
     {
+#pragma warning disable CS0649 // Field 'Rectangle.height' is never assigned to, and will always have its default value 0
+#pragma warning disable CS0649 // Field 'Rectangle.width' is never assigned to, and will always have its default value 0
         protected int width, height;
+#pragma warning restore CS0649 // Field 'Rectangle.width' is never assigned to, and will always have its default value 0
+#pragma warning restore CS0649 // Field 'Rectangle.height' is never assigned to, and will always have its default value 0
         public Rectangle(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
         }

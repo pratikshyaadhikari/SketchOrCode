@@ -16,8 +16,12 @@ namespace SketchOrCode
     public partial class Form1 : Form
     {
 
+#pragma warning disable CS0169 // The field 'Form1.multipleLineCode' is never used
         private object multipleLineCode;
+#pragma warning restore CS0169 // The field 'Form1.multipleLineCode' is never used
+#pragma warning disable CS0169 // The field 'Form1.multipleLineCodeVal' is never used
         private readonly object multipleLineCodeVal;
+#pragma warning restore CS0169 // The field 'Form1.multipleLineCodeVal' is never used
 
         public Form1()
         {

@@ -9,7 +9,9 @@ namespace SketchOrCode
 {
     internal class Square : Rectangle
     {
+#pragma warning disable CS0649 // Field 'Square.size' is never assigned to, and will always have its default value 0
         protected int size;
+#pragma warning restore CS0649 // Field 'Square.size' is never assigned to, and will always have its default value 0
 
         public Square(GraphicsAdapter graphics, bool isFillOn, Color color, int xPos, int yPos, List<string> parameter) : base(graphics, isFillOn, color, xPos, yPos, parameter)
         {
@@ -35,7 +37,9 @@ namespace SketchOrCode
             }
         }
 
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public virtual void Draw()
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
         {
             //implemented in child cmd process class
         }
