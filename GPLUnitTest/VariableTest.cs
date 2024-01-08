@@ -28,11 +28,20 @@ namespace SketchOrCode.nUnitTests
 
 
         [Test]
-        public void validCmdTest2()
+        public void ValidCmdTest3()
         {
             String command = "a= 10\r\n" +
                 "a= a*5\r\n" +
                 "circle a";
+            commandParser.ParseCommand(command, null, true);
+        }
+
+        [Test]
+        public void validCmdTest2()
+        {
+            String command = "a= 90\r\n" +
+                "b=90\r\n" +
+                "triangle b,a";
             commandParser.ParseCommand(command, null, true);
         }
     }
