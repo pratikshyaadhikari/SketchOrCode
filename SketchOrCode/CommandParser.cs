@@ -24,9 +24,8 @@ namespace SketchOrCode
         private Color color = Color.Black;
         private int xPos = 0;
         private int yPos = 0;
-        /*statement
-         * using singleton pattern where we use this dictionary instant variable to use globally within the program
-         * */
+
+        //* using singleton pattern where we use this dictionary instant variable to use globally within the program 
         private Dictionary<string, string> variableValueDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> methodBodyDictionary = new Dictionary<string, string>();
        
@@ -41,9 +40,8 @@ namespace SketchOrCode
 
         /// <statement>
         /// Parsecommand takes two string parameters (singleLineCodeVal and multipleLineCodeVal) and a boolean parameter (isSyntaxCheckOnly). 
-       ///  It processes the command lines and executes commands provided.
-        /// </statement>
-         
+        ///  It processes the command lines and executes commands provided.
+        /// </statement> 
         public void ParseCommand(String singleLineCodeVal, String multipleLineCodeVal, Boolean isSyntaxCheckOnly)
         {
             String command = singleLineCodeVal;
@@ -579,7 +577,11 @@ namespace SketchOrCode
             }
             return singleLineCodeVal;
         }
-
+        /// <summary>
+        /// save file to the desired location
+        /// </summary>
+        /// <param name="saveFileLocation"></param>
+        /// <param name="command"></param>
         public void SaveFile(String saveFileLocation, String command)
         {
             File.WriteAllText(saveFileLocation, command);
@@ -589,7 +591,12 @@ namespace SketchOrCode
         {
             return File.ReadAllText(saveFileLocation);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        /// <exception cref="SketchApplicationException"></exception>
         public int ArithmeticOperation(String expression)
         {
             if (expression.Contains("+"))
