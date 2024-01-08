@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -9,9 +10,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using static System.Windows.Forms.LinkLabel;
 
 namespace SketchOrCode
 {
+    /// <summary>
+    /// Represents a class for parsing commands and executing corresponding actions.
+    /// </summary>
     public class CommandParser
     {
         private GraphicsAdapter Graphics;
@@ -24,19 +29,21 @@ namespace SketchOrCode
          * */
         private Dictionary<string, string> variableValueDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> methodBodyDictionary = new Dictionary<string, string>();
-
-        /*statement
-        *CommandParser  constructor class, which initializes the Graphics field with the provided Graphics object.
-        */
+       
+        
+        /// <statement>
+        /// CommandParser  constructor class, which initializes the Graphics field with the provided Graphics object.
+        /// </statement>
         public CommandParser(GraphicsAdapter graphics)
         {
             this.Graphics = graphics;
         }
 
-        /*statement
-         *Parsecommand takes two string parameters (singleLineCodeVal and multipleLineCodeVal) and a boolean parameter (isSyntaxCheckOnly). 
-         *It processes the command lines and executes commands provided.
-        */
+        /// <statement>
+        /// Parsecommand takes two string parameters (singleLineCodeVal and multipleLineCodeVal) and a boolean parameter (isSyntaxCheckOnly). 
+       ///  It processes the command lines and executes commands provided.
+        /// </statement>
+         
         public void ParseCommand(String singleLineCodeVal, String multipleLineCodeVal, Boolean isSyntaxCheckOnly)
         {
             String command = singleLineCodeVal;
@@ -78,10 +85,11 @@ namespace SketchOrCode
 
 
         }
-        /*
-         * private method called by ParseCommand.
-         * It processes an individual command line, extracts the command and parameters, and executes the corresponding action.
-         */
+       
+        /// <statement>
+        ///private method called by ParseCommand.
+        ///It processes an individual command line, extracts the command and parameters, and executes the corresponding action.. 
+        /// </statement>
         private int runCommand(string cmdByLine, Boolean isSyntaxCheckOnly, int executionIndex, string[] ProcessCMDByLine)
         {
             Thread.Sleep(1000);
@@ -495,7 +503,7 @@ namespace SketchOrCode
                 }
 
                 //method work
-                // methodBodyDictionary.Add()
+                //methodBodyDictionary.Add()
 
                 Console.WriteLine("method def part started");
                 String methodName = parameterList[0].Trim();
@@ -535,7 +543,7 @@ namespace SketchOrCode
 
                 if (parts.Length == 2)
                 {
-                    string part2Val = arithmeticOperation(parts[1]).ToString();
+                    string part2Val = ArithmeticOperation(parts[1]).ToString();
                     if (variableValueDictionary.ContainsKey(parts[0].Trim()))
                     {
                         variableValueDictionary.Remove(parts[0].Trim());
@@ -582,7 +590,7 @@ namespace SketchOrCode
             return File.ReadAllText(saveFileLocation);
         }
 
-        public int arithmeticOperation(String expression)
+        public int ArithmeticOperation(String expression)
         {
             if (expression.Contains("+"))
             {
